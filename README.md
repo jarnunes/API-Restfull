@@ -17,3 +17,5 @@ node server.js
 ````
 
 Visit `http://localhost:3000` in your browser. The app should be up & running.
+
+## Test API CRUD

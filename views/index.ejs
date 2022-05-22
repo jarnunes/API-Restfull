@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Jardel Nunes">
+    <title>API</title>
+    <%- include('partials/_head');  %> 
+
+</head>
+
+<body>
+    <div class="container-base">
+        <%- include('partials/_nav');  %> 
+        <main>
+            <div class="container" id="containner">
+                <%- include('partials/_alert');  %>
+
+                <h2 class="py-3 mb-2 border-bottom h3">Produtos</h2>
+                <div class="toolbar my-3">
+                    <div class="row g-3">
+                        <div class="col">
+
+                            <button class="btn btn-primary" type="submit" name="button" onclick="appendChildModalPostProduct()">
+                                <i class="bi bi-plus-lg"></i> Novo
+                            </button>
+                            <button class="btn btn-primary disabled" type="submit" name="button">
+                                <i class="bi bi-cloud-arrow-up"></i> Importar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row row-cols-1 g-2">
+                    <% for(let i=0; i < produtos.length; i++) {%>
+
+
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <h5 class="card-title"><%= produtos[i].descricao %></h5>
+                                            <div class="info d-inline-block">
+                                                <span class="d-block">
+                                                    <small>
+                                                        <strong>ID:</strong> <%= produtos[i].id %> &nbsp;|&nbsp;
+                                                        <strong>Preço:</strong> <%= produtos[i].valor  %> &nbsp;|&nbsp;
+                                                        <strong>Descrição:</strong> <%= produtos[i].descricao %> &nbsp;|&nbsp;
+                                                        <strong>Marca:</strong> <%= produtos[i].marca  %>
+                                                    </small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-2" style="text-align: right">
+                                            <a class="btn btn-outline-primary btn-sm" href="#" role="button" onclick="updateProduct('<%= produtos[i].id %>')">
+                                                <i class="bi bi-pencil-fill"></i>
+                                            </a>
+
+                                            <a class="btn btn-outline-danger btn-sm" href="#" role="button" onclick="deleteProd('<%= produtos[i].id %>')">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+
+                </div>
+
+                <nav aria-label="Page navigation" class="my-3">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+        </main>
+    </div>
+
+    
+    <%- include('partials/_footer');  %> 
+
+</body>
+</html>

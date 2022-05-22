@@ -1,0 +1,27 @@
+{
+    "title": "Root Schema",
+    "type": "object",
+    "default": {},
+    "required": [
+        "descricao",
+        "valor",
+        "marca"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "descricao": {
+            "title": "The descricao Schema",
+            "type": "string",
+            "default": ""
+        },
+        "valor": {
+            "title": "The valor Schema",
+            "type": "number",
+            "default": 0.0
+        },
+        "marca": {
+            "title": "The marca Schema",
+            "type": "string"
+        }
+    }
+}

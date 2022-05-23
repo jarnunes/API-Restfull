@@ -57,6 +57,7 @@ The REST API to the example app is described below.
 
 ## Post
 > Request : `POST /api/products/`
+    
     curl -i -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"descricao":"String","valor":0.0,"marca":"String"}' http://localhost:3000/api/products/
 
 

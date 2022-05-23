@@ -60,6 +60,7 @@ The REST API to the example app is described below.
     
     curl -i -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"descricao":"String","valor":0.0,"marca":"String"}' http://localhost:3000/api/products/
 
+> Response : 
 
     HTTP/1.1 201 Created
     X-Powered-By: Express
@@ -70,3 +71,69 @@ The REST API to the example app is described below.
     Keep-Alive: timeout=5
 
     {"message":"Produto cadastrado com sucesso!","data":{"descricao":"String","valor":0,"marca":"String","id":7}}
+
+#### Invalid JSON
+> Request : `POST /api/products/`
+
+    curl -i -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"desc":"String","val":0.0,"mar":"String"}' http://localhost:3000/api/products/
+
+> Response :
+
+    HTTP/1.1 400 Bad Request
+    X-Powered-By: Express
+    Content-Type: application/json; charset=utf-8
+    Content-Length: 77
+    Connection: keep-alive
+    Keep-Alive: timeout=5
+
+    {"message":"JSON inválido.","data":{"desc":"String","val":0,"mar":"String"}}
+
+All POST requests are validate before save. For more details see the JsonSchema in `/custom_modules/json-schema.json`
+
+## Put
+> Request : PUT `/api/products/ID`
+
+    curl -i -H "Accept: application/json" -H "Content-type: application/json" -X PUT -d '{"descricao":"String","valor":0.0,"marca":"String"}' http://localhost:3000/api/products/2
+
+> Response : 
+
+    HTTP/1.1 202 Accepted
+    X-Powered-By: Express
+    Content-Type: application/json; charset=utf-8
+    Content-Length: 45
+    Connection: keep-alive
+    Keep-Alive: timeout=5
+
+    {"message":"Produto atualizado com sucesso!"}
+
+## Delete
+> Request : DELETE `/api/products/ID`
+
+    curl -i -H 'Accept: application/json' -X DELETE http://localhost:3000/api/products/9999
+
+> Response : 
+
+    HTTP/1.1 200 OK
+    X-Powered-By: Express
+    Content-Type: application/json; charset=utf-8
+    Content-Length: 43
+    Connection: keep-alive
+    Keep-Alive: timeout=5
+
+    {"message":"Produto excluido com sucesso!"}
+
+### Delete non-existing ID
+> Request : DELETE `/api/products/ID`
+
+    curl -i -H 'Accept: application/json' -X DELETE http://localhost:3000/api/products/9999
+
+> Response: 
+
+    HTTP/1.1 404 Not Found
+    X-Powered-By: Express
+    Content-Type: application/json; charset=utf-8
+    Content-Length: 38
+    Connection: keep-alive
+    Keep-Alive: timeout=5
+
+    {"message":"Produto não encontrado!"}

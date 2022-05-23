@@ -31,7 +31,7 @@ The REST API to the example app is described below.
 
     curl -i -H 'Accept: application/json' http://localhost:3000/api/products/
 
-### Response
+> Response
 
     HTTP/1.1 200 OK
     X-Powered-By: Express
@@ -44,7 +44,7 @@ The REST API to the example app is described below.
 
     curl -i -H 'Accept: application/json' http://localhost:3000/api/products/1
 
-### Response
+> Response
 
     HTTP/1.1 200 OK
     X-Powered-By: Express
@@ -53,5 +53,19 @@ The REST API to the example app is described below.
     Connection: keep-alive
     Keep-Alive: timeout=5
 
-    {"id":1,"descricao":"Arroz parboilizado 5Kg","valor":25,"marca":"Tio João"}
+    {"id":1,"descricao":"String","valor":0.0, "marca":"String"}
 
+## Post
+> Request : `POST /api/products/`
+    curl -i -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"descricao":"String","valor":0.0,"marca":"String"}' http://localhost:3000/api/products/
+
+
+    HTTP/1.1 201 Created
+    X-Powered-By: Express
+    Content-Type: application/json; charset=utf-8
+    Content-Length: 109
+    ETag: W/"6d-aLQ3q0gJo80PI7U4aUbRzxEQs3w"
+    Connection: keep-alive
+    Keep-Alive: timeout=5
+
+    {"message":"Produto cadastrado com sucesso!","data":{"descricao":"String","valor":0,"marca":"String","id":7}}

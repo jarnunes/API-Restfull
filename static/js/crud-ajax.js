@@ -1,4 +1,4 @@
-const API_URL = 'https://api-tecweb.herokuapp.com/api/products'
+const API_URL = 'https://twrestfull-api.herokuapp.com/api/products'
 const CLASS_LIST_SUCCESS = ['show', 'bg-success']
 function refreshContainer() {
     $("#containner").load(window.location.href + " #containner");

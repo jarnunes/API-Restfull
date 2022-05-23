@@ -18,9 +18,9 @@ node server.js
 
 Visit `http://localhost:3000` in your browser. The app should be up & running.
 
-## Test API CRUD
+## API CRUD
 This CRUD was created to validate API and training AJAX.
-Open your browser and visit `https://twrestfull-api.herokuapp.com/`.
+Open your browser and visit [https://twrestfull-api.herokuapp.com/](https://twrestfull-api.herokuapp.com/).
 
 # API Endpoints
 The REST API to the example app is described below.

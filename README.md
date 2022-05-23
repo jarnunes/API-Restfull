@@ -27,8 +27,7 @@ The REST API to the example app is described below.
 
 ## Get list of Products
 
-### Request
-`GET /api/products`
+> Request : `GET /api/products`
 
     curl -i -H 'Accept: application/json' http://localhost:3000/api/products/
 
@@ -37,12 +36,22 @@ The REST API to the example app is described below.
     HTTP/1.1 200 OK
     X-Powered-By: Express
     Content-Type: application/json; charset=utf-8
-    Content-Length: 376
-    ETag: W/"178-nDRqepljM5gzpp4dBhJmpq2qm70"
-    Date: Mon, 23 May 2022 00:09:06 GMT
+    []
+
+
+## Get Product by ID
+> Request : `GET /api/products/ID`
+
+    curl -i -H 'Accept: application/json' http://localhost:3000/api/products/1
+
+### Response
+
+    HTTP/1.1 200 OK
+    X-Powered-By: Express
+    Content-Type: application/json; charset=utf-8
+    Content-Length: 76
     Connection: keep-alive
     Keep-Alive: timeout=5
 
-    []
+    {"id":1,"descricao":"Arroz parboilizado 5Kg","valor":25,"marca":"Tio João"}
 
-    

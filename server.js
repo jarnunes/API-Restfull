@@ -1,9 +1,21 @@
+require ('dotenv').config();
+
 const express = require('express')
 const morgan = require('morgan')
+
 const utils = require('./custom_modules/utils')
 
 const app = express()
 const PORT = process.env.PORT || 3000 // required to heroku deploy
+
+const knex = require('knex')({
+    client: 'pg',
+    debug: true,
+    connection: {
+    connectionString : process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false },
+    }
+   });
 
 const db_produtos = require('./produtos.json')
 
@@ -24,7 +36,10 @@ app.get('/', (req, res, next) => { res.render('index', { produtos: db_produtos.p
 
 /** :: API :: **/
 app.get('/api/products', (req, res) => {
-    res.status(200).send(db_produtos)
+    knex.select('*').from('produto').then(produtos =>{
+        res.status(200).json(produtos)
+    })
+    
 });
 
 app.get('/api/products/:id', (req, res) => {

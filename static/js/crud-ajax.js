@@ -1,4 +1,4 @@
-const API_URL = 'https://twrestfull-api.herokuapp.com/api/products'
+const API_URL = '/api/products'
 const CLASS_LIST_SUCCESS = ['show', 'bg-success']
 function refreshContainer() {
     $("#containner").load(window.location.href + " #containner");
@@ -16,7 +16,7 @@ function postProduct() {
     fetch(API_URL, {
         method: 'POST',
         body: JSON.stringify(form),
-        headers: { "Content-type": "application/json; charset=UTF-8" }
+        headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + sessionStorage.getItem('token') }
 
     })
         .then(res => res.json())
@@ -29,17 +29,23 @@ function postProduct() {
 }
 
 function deleteProd(idProd) {
-    fetch(getUrl(idProd), { method: 'DELETE' })
+    fetch(getUrl(idProd), {
+        method: 'DELETE',
+        headers: { "Authorization": "Bearer " + sessionStorage.getItem('token') }
+    })
         .then(res => res.json())
         .then(json => { refreshContainer() })
 }
 
 function updateProduct(idProd) {
-    fetch(getUrl(idProd), { method: 'GET' })
+    fetch(getUrl(idProd), {
+        method: 'GET',
+        headers: { "Authorization": "Bearer " + sessionStorage.getItem('token') }
+    })
         .then(res => res.json())
         .then(json => {
-            json['idTag'] = `<input type="hidden" id="custId" name="id" value="${json.id}">`
-            appendChildModal(ID_CONTAINER_MODAL_PRODUCT, ID_MODAL_PRODUCT, ID_FORM_PRODUCT, json, 'putProduct()')
+            json.data['idTag'] = `<input type="hidden" id="custId" name="id" value="${json.data.id}">`
+            appendChildModal(ID_CONTAINER_MODAL_PRODUCT, ID_MODAL_PRODUCT, ID_FORM_PRODUCT, json.data, 'putProduct()')
             openModal(ID_MODAL_PRODUCT)
         })
 }
@@ -55,7 +61,8 @@ function putProduct() {
     fetch(put_url, {
         method: 'PUT',
         body: JSON.stringify(form),
-        headers: { "Content-type": "application/json; charset=UTF-8" }
+        headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + sessionStorage.getItem('token') }
+
     })
         .then(res => res.json())
         .then(json => {
@@ -75,3 +82,11 @@ function showAlert(message, classesList) {
         document.getElementById('alertContent').classList.remove(...classesList)
     }, 10000)
 }
+
+
+document.getElementById('logout').addEventListener('click', (event) => {
+    event.preventDefault();
+    fetch('/auth/logout')
+        .then(e => document.location.reload())
+
+})

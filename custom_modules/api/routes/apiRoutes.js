@@ -1,27 +1,28 @@
 const express = require('express')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-
 const knex = require('../../database')
 const utils = require('../../utils')
-
 const Json = utils.Json
 const Response = utils.Response
-let apiRouter = express.Router()
 
-const endpointAuthenticate = '/authenticate'
+const jsonValidations = require('../jsonValidations')
+const authSecurity = require('../../auth/authSecurity')
+const validateProductJson = jsonValidations.validateProductJson
+const checkToken = authSecurity.checkToken
+const isAdmin = authSecurity.isAdmin
+
 const endpointProduct = '/products'
-const SECRET_KEY = 'rektsodikdkd2940452'
 
-
+let apiRouter = express.Router()
 // :: PRODUCTS ::
-apiRouter.get(endpointProduct, (req, res) => {
-    knex.select('*').from('produto').then(products => {
+apiRouter.get(endpointProduct, checkToken, (req, res) => {
+    knex('produto')
+    .orderBy('id', 'asc')
+    .then(products => {
         res.status(200).json(new Response(null, 200, null, products))
     })
 })
 
-apiRouter.get(endpointProduct + '/:id', (req, res) => {
+apiRouter.get(endpointProduct + '/:id', checkToken, (req, res) => {
     let id = parseInt(req.params.id)
     knex('produto')
         .where('id', '=', id)
@@ -35,26 +36,20 @@ apiRouter.get(endpointProduct + '/:id', (req, res) => {
         }).catch(err => res.status(500).json(new Response('resp.http.500', 500, err)))
 })
 
-apiRouter.post(endpointProduct, (req, res) => {
+apiRouter.post(endpointProduct, checkToken, isAdmin, validateProductJson, (req, res) => {
     let product = req.body
-    if (Json.validate(product)) {
-        knex('produto')
-            .insert({
-                descricao: product.descricao,
-                valor: product.valor,
-                marca: product.marca
-            }, ['id', 'descricao', 'valor', 'marca'])
-            .then(result => {
-                res.status(200).json(new Response(null, 200, null, result))
-            }).catch(err => res.status(500).json(new Response('resp.http.500', 500, err)))
-    }
-    else {
-        res.status(404).json(new Response('json.invalid', 404))
-    }
-
+    knex('produto')
+        .insert({
+            descricao: product.descricao,
+            valor: product.valor,
+            marca: product.marca
+        }, ['id', 'descricao', 'valor', 'marca'])
+        .then(result => {
+            res.status(200).json(new Response(null, 200, null, result))
+        }).catch(err => res.status(500).json(new Response('resp.http.500', 500, err)))
 })
 
-apiRouter.delete(endpointProduct + '/:id', (req, res) => {
+apiRouter.delete(endpointProduct + '/:id', checkToken, isAdmin, (req, res) => {
     let id = parseInt(req.params.id)
     console.log(id)
     knex('produto')
@@ -69,77 +64,26 @@ apiRouter.delete(endpointProduct + '/:id', (req, res) => {
         }).catch(err => res.status(500).json(new Response('resp.http.500', 500, err.message)))
 })
 
-apiRouter.put(endpointProduct + '/:id', (req, res) => {
+apiRouter.put(endpointProduct + '/:id', checkToken, isAdmin, validateProductJson, (req, res) => {
     let id = parseInt(req.params.id)
     let product = req.body
-    if (Json.validate(product)) {
-        knex('produto')
-            .where({ 'id': id })
-            .update({
-                descricao: product.descricao,
-                valor: product.valor,
-                marca: product.marca
-            }, ['id', 'descricao', 'valor', 'marca'])
-            .then(response => {
-                if (response.length > 0) {
-                    res.status(200).json(new Response(null, 200, null, response))
-                }
-                else {
-                    res.status(404).json(new Response('resp.http.404', 404, null, null))
-                }
-            }).catch(err => {
-                res.status(500).json(new Response('resp.http.500', 500, err.message))
-            })
-    }
-})
-
-
-// :: AUTHENTICATE ::
-apiRouter.post('/register', (req, res) => {
-    knex('usuario')
-        .insert({
-            nome: req.body.nome,
-            login: req.body.login,
-            senha: bcrypt.hashSync(req.body.senha),
-            email: req.body.email
-        }, ['id'])
-        .then(resp => {
-            res.status(200).json(new Response(null, 200, null, resp[0]))
-        }).catch(err => res.status(500).json(new Response('resp.http.500', 500, err)))
-})
-
-
-apiRouter.post('/login', (req, res) => {
-    knex('usuario')
-        .where({ login: req.body.login })
-        .first()
-        .then(user => {
-            if (!Json.isEmpty(user) && bcrypt.compareSync(req.body.senha, user.senha)) {
-                let tokenJWT = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: 3600 })
-                let data = {
-                    id: user.id,
-                    login: user.login,
-                    nome: user.nome,
-                    roles: user.roles,
-                    token: tokenJWT
-                }
-                res.status(200).json(new Response(null, 200, null, data))
-            } else {
-                res.status(404).json(new Response('authenticate.invalid.user.password', 404, null))
+    knex('produto')
+        .where({ 'id': id })
+        .update({
+            descricao: product.descricao,
+            valor: product.valor,
+            marca: product.marca
+        }, ['id', 'descricao', 'valor', 'marca'])
+        .then(response => {
+            if (response.length > 0) {
+                res.status(200).json(new Response(null, 200, null, response))
             }
-
-        }).catch(err => res.status(500).json(new Response('resp.http.500', 500, err)))
+            else {
+                res.status(404).json(new Response('resp.http.404', 404, null, null))
+            }
+        }).catch(err => {
+            res.status(500).json(new Response('resp.http.500', 500, err.message))
+        })
 })
-
-
-
-
-
-
-
-
-
-
-
 
 module.exports = apiRouter;

@@ -1,26 +1,15 @@
 const Ajv = require("ajv")
 const ajv = new Ajv()
 const prop = require('./messages/msg').msg
-const json_schema = require('./json-schema.json')
-
 
 class Json {
-    /**
-     * 
-     * @param {*} json 
-     * @returns 
-     */
-    static validate(json) {
-        return ajv.validate(json_schema, json);
-    }
-
     /**
      * Validate json 
      * @param {*} json 
      * @param {*} jsonSchema 
      * @returns boolean
      */
-    static validate(json, jsonSchema) {
+    static validateSchema(json, jsonSchema) {
         return ajv.validate(jsonSchema, json)
     }
 
@@ -53,8 +42,6 @@ class Response {
         }
     }
 }
-
-
 
 module.exports = {
     Json, Response

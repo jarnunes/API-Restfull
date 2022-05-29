@@ -32,6 +32,7 @@ function appendChildModal(idContainerModal, idModal, idForm, jsonFieldsValues, o
 }
 
 function getHtmlModalProduct(idModal, idForm, jsonFieldsValues, onclickSaveFunc, onclickCancelFunc) {
+    console.log(jsonFieldsValues)
     let isEmpty = isJSONEmpty(jsonFieldsValues);
     let modal =
         `

@@ -1,19 +1,38 @@
 <nav class="left-navbar">
     <div class="d-flex flex-column flex-shrink-0 bg-primary position-fixed">
-        <a href="/" class="d-block p-3 link-dark text-decoration-none" title="Icon-only" data-bs-toggle="tooltip" data-bs-placement="right">
+        <a href="/" class="d-block p-3 link-dark text-decoration-none" title="Icon-only" data-bs-toggle="tooltip"
+            data-bs-placement="right">
             <span class="visually-hidden">Logo</span>
         </a>
         <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
             <li>
-                <a href="/" class="nav-link py-3 text-icon" title="Dashboard" data-bs-toggle="tooltip" data-bs-placement="right">
-                    <i class="bi bi-speedometer2" ></i>
+                <a href="/" class="nav-link py-3 text-icon" title="Dashboard" data-bs-toggle="tooltip"
+                    data-bs-placement="right">
+                    <i class="bi bi-speedometer2"></i>
                 </a>
             </li>
             <li>
-                <a href="/" class="nav-link py-3 text-icon active" title="Produtos" data-bs-toggle="tooltip" data-bs-placement="right">
-                    <i class="bi bi-basket" role="img" aria-label="Produtos" ></i>
+                <a href="/" class="nav-link py-3 text-icon active" title="Produtos" data-bs-toggle="tooltip"
+                    data-bs-placement="right">
+                    <i class="bi bi-basket" role="img" aria-label="Produtos"></i>
                 </a>
             </li>
         </ul>
+
+        <div class="dropdown border-top">
+            <a id="logout" href="#"
+                class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none">
+                <i class="bi bi-box-arrow-left" width="24" height="24"></i>
+            </a>
+            <ul class="dropdown-menu text-small shadow" >
+                <li><a class="dropdown-item" href="#">New project...</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Sign out</a></li>
+            </ul>
+        </div>
     </div>
 </nav>

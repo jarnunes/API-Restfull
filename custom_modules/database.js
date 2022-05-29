@@ -7,17 +7,4 @@ const knex = require('knex')({
     }
 });
 
-
-class Database{
-    static select(filter){
-
-    }
-    static update(filter){
-
-    }
-    static delete(filter){
-        
-    }
-}
-
 module.exports = knex;

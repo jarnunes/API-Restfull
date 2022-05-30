@@ -87,6 +87,5 @@ function showAlert(message, classesList) {
 document.getElementById('logout').addEventListener('click', (event) => {
     event.preventDefault();
     fetch('/auth/logout')
-        .then(e => document.location.reload())
-
+        .then(() => document.location.reload())
 })

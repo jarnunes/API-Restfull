@@ -17,6 +17,7 @@ var sessionControl;
 
 // :: AUTHENTICATE ::
 authRouter.post('/register', (req, res) => {
+    console.log(req.body)
     knex('usuario')
         .insert({
             nome: req.body.nome,
@@ -62,6 +63,9 @@ authRouter.get('/common/login', (req, res) => {
 })
 
 
+authRouter.get('/common/register', (req, res, next) => {
+    res.render('register')
+})
 authRouter.get('/logout', (req, res, next) => {
     req.session.destroy(() => {
         res.redirect('/auth/common/login');

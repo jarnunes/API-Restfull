@@ -40,7 +40,6 @@ app.use(session({
 app.use('/auth', authRouter)
 app.use('/api', apiRouter)
 
-
 app.use('/', (req, res, next) => {
     if (req.session && !req.session.userId) {
         res.redirect('auth/common/login')
@@ -49,6 +48,7 @@ app.use('/', (req, res, next) => {
         next()
     }
 })
+
 
 app.use('/', appRouter)
 app.use((req, res, next) => { res.status(404).send(msg('resp.http.404.html')) });

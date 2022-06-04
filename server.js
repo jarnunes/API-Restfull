@@ -41,9 +41,15 @@ app.use('/authenticate', secRouters)
 app.use('/auth', authRouter)
 app.use('/api', apiRouter)
 
+const loop = 0 //prevent infinit loop
 app.use('/', (req, res, next) => {
     if (req.session && !req.session.userId) {
         res.redirect('/authenticate/common/login')
+        loop++
+        if (loop > 3) {
+            res.status(404).send(msg('resp.http.404.html'))
+        }
+        return
     }
     else {
         next()

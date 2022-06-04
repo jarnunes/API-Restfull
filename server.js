@@ -41,7 +41,7 @@ app.use('/authenticate', secRouters)
 app.use('/auth', authRouter)
 app.use('/api', apiRouter)
 
-const loop = 0 //prevent infinit loop
+let loop = 0 //prevent infinit loop
 app.use('/', (req, res, next) => {
     if (req.session && !req.session.userId) {
         res.redirect('/authenticate/common/login')

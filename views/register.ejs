@@ -16,6 +16,7 @@
     <main class="form-signin">
         <form id="register" method="POST">
             <h1 class="h3 mb-3 fw-normal">Register</h1>
+            <div id="messages"> </div>
             <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" name="nome" class="form-control" id="name">
@@ -37,12 +38,20 @@
                 <input type="password" name="senha" class="form-control" id="password">
 
             </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+            <div class="block my-3">
+                <a href="/authenticate/common/login">Login</a>
+            </div>
         </form>
+
     </main>
 
     <script src="../../js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/utils.js"></script>
     <script src="../../js/register.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </body>
 

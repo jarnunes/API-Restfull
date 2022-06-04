@@ -7,7 +7,7 @@ const session = require('express-session')
 const apiRouter = require('./custom_modules/api/routes/apiRoutes')
 const authRouter = require('./custom_modules/auth/routes/authRoutes')
 const appRouter = require('./custom_modules/app/routes/appRoutes');
-const { redirect } = require('express/lib/response');
+const secRouters = require('./custom_modules/app/routes/secRouters');
 
 const msg = require('./custom_modules/messages/msg').msg
 
@@ -37,12 +37,13 @@ app.use(session({
 
 
 // :: API ::
+app.use('/authenticate', secRouters)
 app.use('/auth', authRouter)
 app.use('/api', apiRouter)
 
 app.use('/', (req, res, next) => {
     if (req.session && !req.session.userId) {
-        res.redirect('auth/common/login')
+        res.redirect('authenticate/common/login')
     }
     else {
         next()

@@ -1,21 +1,4 @@
 
-document.querySelector('form').addEventListener('submit', (event) => {
-    event.preventDefault();
-    let form = Object.fromEntries(new FormData(document.getElementById('login')).entries())
-    fetch('/auth/login', {
-        method: 'POST',
-        body: JSON.stringify(form),
-        headers: { "Content-type": "application/json; charset=UTF-8" }
-    })
-        .then(res => res.json())
-        .then(json => {
-            sessionStorage.setItem('token', json.data.token)
-            window.location.href = '/'
-        })
-})
-
-
-
 document.getElementById('register').addEventListener('submit', (event) => {
     event.preventDefault();
     let form = Object.fromEntries(new FormData(document.getElementById('register')).entries())
@@ -26,8 +9,13 @@ document.getElementById('register').addEventListener('submit', (event) => {
     })
         .then(res => res.json())
         .then(json => {
-            sessionStorage.setItem('token', json.data.token)
-            window.location.href = '/auth/common/login'
+            if (json.code === 409) {
+                Utils.alert('alertMessage', 'danger', json.msg)
+            }
+            if (json.code === 200) {
+                sessionStorage.setItem('token', json.data.token)
+                window.location.href = '/authenticate/common/login'
+            }
         })
 })
 

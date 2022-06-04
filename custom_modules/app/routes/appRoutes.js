@@ -13,4 +13,20 @@ appRouter.get('', (req, res, next) => {
 });
 
 
+
+appRouter.get('/common/login', (req, res) => {
+    res.render('login')
+})
+
+
+appRouter.get('/common/register', (req, res, next) => {
+    res.render('register')
+})
+appRouter.get('/logout', (req, res, next) => {
+    req.session.destroy(() => {
+        res.redirect('/auth/common/login');
+    });
+})
+
+
 module.exports = appRouter;

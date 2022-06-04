@@ -16,16 +16,16 @@ let apiRouter = express.Router()
 // :: PRODUCTS ::
 apiRouter.get(endpointProduct, checkToken, (req, res) => {
     knex('produto')
-    .orderBy('id', 'asc')
-    .then(products => {
-        res.status(200).json(new Response(null, 200, null, products))
-    })
+        .orderBy('id', 'asc')
+        .then(products => {
+            res.status(200).json(new Response(null, 200, null, products))
+        })
 })
 
 apiRouter.get(endpointProduct + '/:id', checkToken, (req, res) => {
     let id = parseInt(req.params.id)
     knex('produto')
-        .where('id', '=', id)
+        .where({ 'id': id })
         .first()
         .then(product => {
             if (!Json.isEmpty(product)) {
@@ -51,7 +51,6 @@ apiRouter.post(endpointProduct, checkToken, isAdmin, validateProductJson, (req, 
 
 apiRouter.delete(endpointProduct + '/:id', checkToken, isAdmin, (req, res) => {
     let id = parseInt(req.params.id)
-    console.log(id)
     knex('produto')
         .where({ 'id': id })
         .delete('id', 'descricao')

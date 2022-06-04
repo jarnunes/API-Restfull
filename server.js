@@ -43,7 +43,7 @@ app.use('/api', apiRouter)
 
 app.use('/', (req, res, next) => {
     if (req.session && !req.session.userId) {
-        res.redirect('authenticate/common/login')
+        res.redirect('http://localhost:' + PORT + '/authenticate/common/login')
     }
     else {
         next()

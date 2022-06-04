@@ -10,6 +10,14 @@ Restfull API with Node.js
 npm install
 ```
 
+> Create database. DDL files in database folder
+
+> Configure a .env file with variables:
+```
+DATABASE_URL=URL_PASSWORD
+SECRET_KEY=YOU_SECRET_KEY_VALUE
+```
+
 > Start the app
 
 ````bash

@@ -41,12 +41,9 @@ app.use('/authenticate', secRouters)
 app.use('/auth', authRouter)
 app.use('/api', apiRouter)
 
-const loop = 0
 app.use('/', (req, res, next) => {
-
     if (req.session && !req.session.userId) {
         res.redirect('/authenticate/common/login')
-        return
     }
     else {
         next()
